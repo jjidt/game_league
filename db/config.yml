@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
-  database: calendar_development
+  database: league_development
 
 test:
   adapter: postgresql
-  database: calendar_test
+  database: league_test
