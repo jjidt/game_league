@@ -4,4 +4,9 @@ class Player < ActiveRecord::Base
 
   validates :name, :presence => true
   validates_uniqueness_of :name
+
+  def wins
+    self.games.merge(Result.where(:winner => true))
+  end
+  
 end
