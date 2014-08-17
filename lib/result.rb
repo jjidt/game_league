@@ -7,6 +7,8 @@ class Result < ActiveRecord::Base
 
   before_save :assign_win
 
+  scope :win, lambda { where(winner: true) }
+
 private
 
   def assign_win
