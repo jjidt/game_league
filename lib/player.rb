@@ -1,8 +1,7 @@
 class Player < ActiveRecord::Base
-  has_and_belongs_to_many :games
+  has_many :results
+  has_many :games, :through => :results
 
   validates :name, :presence => true
   validates_uniqueness_of :name
-  validates :score, :presence => true
-  validates_inclusion_of :score, :in => 0..21
 end
