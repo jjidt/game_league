@@ -75,8 +75,13 @@ def main_menu
     clear
     list_leagues
     league_name = prompt("enter name of league to access")
-    selected_league = League.where(:name => league_name).first
-    player_menu(selected_league)
+    if League.where(:name => league_name).first
+      selected_league = League.where(:name => league_name).first
+      player_menu(selected_league)
+    else
+      clear
+      main_menu
+    end
   when "e"
     exit
   else
@@ -90,7 +95,7 @@ def player_menu(league)
   ws
   puts "        AP > Add player\n
         RS > Report score\n
-        LP > Access league players\n
+        LP > Access players\n
         SG > Show game history\n
         E > Exit to main menu"
 
@@ -103,7 +108,7 @@ def player_menu(league)
     if new_player.save
       ws
       ws
-      puts "#{name} added to the league roster"
+      puts "#{name} added to the roster"
     else
       ws
       ws
@@ -122,7 +127,7 @@ def player_menu(league)
     player2_score = prompt("player #2's score?").to_i
     player1 = Player.where(:name => player1_name).first
     player2 = Player.where(:name => player2_name).first
-    new_game = Game.create
+    new_game = Game.create(:league_id => league.id)
     if player1 && player2
       result1 = Result.new(:player_id => player1.id, :game_id => new_game.id, :score => player1_score)
       result2 = Result.new(:player_id => player2.id, :game_id => new_game.id, :score => player2_score)
@@ -157,6 +162,18 @@ def player_menu(league)
       sleep 2
     end
     player_menu(league)
+  when 'lp'
+    clear
+    list_players
+    player_choice = prompt("see which players accomplishments?")
+    if Player.where(:name => player_choice) && player_choice !=""
+      player = Player.where(:name => player_choice).first
+      puts "#{player.name}:   victories"
+      list_games(player)
+    end
+    prompt("press enter to return to menu")
+    clear
+    player_menu(league)
   when 'e'
     main_menu
   else player_menu(league)
@@ -183,6 +200,12 @@ def list_players
     underline
   end
   ws
+end
+
+def list_games(player)
+  player.games.each do |game|
+    puts "Game # #{game.id}"
+  end
 end
 
 main_menu
