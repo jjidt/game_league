@@ -16,7 +16,7 @@ describe Result do
     test_result = Result.create(:player_id => player1_id, :game_id => test_game_id, :score => 21)
     test_result2 = Result.create(:player_id => player2_id, :game_id => test_game_id, :score => 7)
     expect(test_result.winner).to eq true
-    expect(test_result2.winner).to eq false
+    expect(test_result2.winner).to eq nil
   end
 
 end

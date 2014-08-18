@@ -18,17 +18,6 @@ def ws
   puts ""
 end
 
-def title
-  print  "_____                        _
-|  __ \                      | |
-| |  \/ __ _ _ __ ___   ___  | |     ___  __ _  __ _ _   _  ___
-| | __ / _` | '_ ` _ \ / _ \ | |    / _ \/ _` |/ _` | | | |/ _ \
-| |_\ \ (_| | | | | | |  __/ | |___|  __/ (_| | (_| | |_| |  __/
- \____/\__,_|_| |_| |_|\___| \_____/\___|\__,_|\__, |\__,_|\___|
-                                                __/ |
-                                               |___/"
-end
-
 def underline
   puts "******************"
 end
@@ -174,6 +163,11 @@ def player_menu(league)
     prompt("press enter to return to menu")
     clear
     player_menu(league)
+  when 'sg'
+    clear
+    games = Game.where(:league_id => league.id)
+    games.each do |game|
+    end
   when 'e'
     main_menu
   else player_menu(league)

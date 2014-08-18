@@ -12,7 +12,7 @@ class Result < ActiveRecord::Base
 private
 
   def assign_win
-    if self.score = 21
+    if self.score == 21
       self.winner = true
     else
       self.winner = nil
