@@ -6,7 +6,7 @@ A console score tracker in Ruby/ActiveRecord/postgreSQL
 
 ###Instructions
 
-to use, download zip file, navigate to the lib directory and open game_league.rb in ruby
+to use, download zip file, and open game_league.rb with ruby
 
 -Add and delete leagues from the command line
 
