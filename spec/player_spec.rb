@@ -23,7 +23,6 @@ describe Player do
       test_result2 = Result.create(:player_id => player2_id, :game_id => test_game_id, :score => 7)
       test_result3 = Result.create(:player_id => player1_id, :game_id => test_game2_id, :score => 21)
       test_result4 = Result.create(:player_id => player1_id, :game_id => test_game3_id, :score => 5)
-      binding.pry
       expect(player1.wins).to eq [test_game, test_game2]
     end
   end

@@ -45,11 +45,11 @@ def main_menu
       ws
       ws
       puts "name not available"
-      sleep 2
+      sleep 1.5
     end
     clear
     list_leagues
-    sleep 2
+    sleep 1.5
     main_menu
   when "d"
     clear
@@ -58,7 +58,7 @@ def main_menu
     League.where(:name => delete).destroy_all
     clear
     list_leagues
-    sleep 2
+    sleep 1.5
     main_menu
   when "l"
     clear
@@ -79,6 +79,8 @@ def main_menu
 end
 
 def player_menu(league)
+  league_id = league.id
+  league = League.find(league_id)
   clear
   puts league.name + "League Menu"
   ws
@@ -116,8 +118,8 @@ def player_menu(league)
     player2_score = prompt("player #2's score?").to_i
     player1 = Player.where(:name => player1_name).first
     player2 = Player.where(:name => player2_name).first
-    new_game = Game.create(:league_id => league.id)
     if player1 && player2
+      new_game = Game.create(:league_id => league.id)
       result1 = Result.new(:player_id => player1.id, :game_id => new_game.id, :score => player1_score)
       result2 = Result.new(:player_id => player2.id, :game_id => new_game.id, :score => player2_score)
     else
@@ -128,7 +130,7 @@ def player_menu(league)
       puts "invalid player input"
       ws
       ws
-      sleep 2
+      sleep 1.5
       player_menu(league)
     end
     if result1.save && result2.save
@@ -139,7 +141,7 @@ def player_menu(league)
       puts "game result added"
       ws
       ws
-      sleep 2
+      sleep 1.5
     else
       clear
       ws
@@ -148,7 +150,7 @@ def player_menu(league)
       puts "invalid score input, must be between 0 and 21"
       ws
       ws
-      sleep 2
+      sleep 1.5
     end
     player_menu(league)
   when 'lp'
@@ -165,9 +167,10 @@ def player_menu(league)
     player_menu(league)
   when 'sg'
     clear
-    games = Game.where(:league_id => league.id)
-    games.each do |game|
-    end
+    league_board(league)
+    prompt("press enter to return to menu")
+    clear
+    player_menu(league)
   when 'e'
     main_menu
   else player_menu(league)
@@ -199,6 +202,17 @@ end
 def list_games(player)
   player.games.each do |game|
     puts "Game # #{game.id}"
+  end
+end
+
+def league_board(league)
+  games = league.games
+  games.each do |game|
+    puts "Game # #{game.id}:"
+    game.results.each do |result|
+      puts "#{result.player.name}:   score: #{result.score}"
+    end
+    underline
   end
 end
 

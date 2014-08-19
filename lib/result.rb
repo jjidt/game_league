@@ -18,5 +18,4 @@ private
       self.winner = nil
     end
   end
-
 end
